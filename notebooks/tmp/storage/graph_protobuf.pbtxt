@@ -1,5 +1,5 @@
 node {
-  name: "A"
+  name: "input"
   op: "Const"
   attr {
     key: "dtype"
@@ -14,14 +14,25 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: -0.80000001
+        float_val: 2.0
       }
     }
   }
 }
 node {
+  name: "A"
+  op: "Square"
+  input: "input"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
   name: "B"
-  op: "Abs"
+  op: "Cos"
   input: "A"
   attr {
     key: "T"
@@ -32,8 +43,8 @@ node {
 }
 node {
   name: "C"
-  op: "Cos"
-  input: "B"
+  op: "Sin"
+  input: "A"
   attr {
     key: "T"
     value {
@@ -43,8 +54,9 @@ node {
 }
 node {
   name: "D"
-  op: "Ceil"
+  op: "Add"
   input: "B"
+  input: "C"
   attr {
     key: "T"
     value {
@@ -54,9 +66,8 @@ node {
 }
 node {
   name: "E"
-  op: "Mul"
-  input: "C"
-  input: "D"
+  op: "Floor"
+  input: "B"
   attr {
     key: "T"
     value {
@@ -66,19 +77,8 @@ node {
 }
 node {
   name: "F"
-  op: "Acos"
-  input: "C"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-}
-node {
-  name: "G"
-  op: "Asin"
-  input: "E"
+  op: "Sqrt"
+  input: "D"
   attr {
     key: "T"
     value {
